@@ -12,6 +12,7 @@ timer=0
 detector = HandDetector(maxHands=1)
 StateResult=False
 StartGame=False
+scores=[0,0] # [AI,Player]
 
 while True:
     imgBG = cv2.imread("RPS\\Resources\\Resources\\BG.png")
@@ -45,6 +46,13 @@ while True:
                 imgAI = cv2.imread(f'RPS\\Resources\\Resources\\{RandomNumber}.png',cv2.IMREAD_UNCHANGED)
                 imgBG = cvzone.overlayPNG(imgBG,imgAI,(149,310))
                 
+                if ((PlayerMove == 1 and RandomNumber == 3) or (PlayerMove == 2 and RandomNumber == 1) or (PlayerMove == 3 and RandomNumber == 2)):
+                    scores[1] += 1
+ 
+                    # AI Wins
+                if ((PlayerMove == 3 and RandomNumber == 1) or (PlayerMove == 1 and RandomNumber == 2) or (PlayerMove == 2 and RandomNumber == 3)):
+                    scores[0] += 1
+                        
                 print(PlayerMove)
                 print(fingers)
         
@@ -53,6 +61,8 @@ while True:
     if StateResult:
         imgBG = cvzone.overlayPNG(imgBG,imgAI,(149,310))
         
+    cv2.putText(imgBG, str(scores[0]), (410, 215), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
+    cv2.putText(imgBG, str(scores[1]), (1112, 215), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
     
     
     #cv2.imshow("Image" , img)
