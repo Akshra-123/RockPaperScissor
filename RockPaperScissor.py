@@ -2,6 +2,7 @@ import cv2
 import cvzone
 from cvzone.HandTrackingModule import HandDetector
 import time
+import random
 
 cap=cv2.VideoCapture(0)
 cap.set(3,640) # setting the third id which is width to 640
@@ -40,7 +41,8 @@ while True:
                 if fingers==[0,1,1,0,0]:
                     PlayerMove=3
                 
-                imgAI = cv2.imread(f'RPS\\Resources\\Resources\\1.png',cv2.IMREAD_UNCHANGED)
+                RandomNumber=random.randint(1,3)
+                imgAI = cv2.imread(f'RPS\\Resources\\Resources\\{RandomNumber}.png',cv2.IMREAD_UNCHANGED)
                 imgBG = cvzone.overlayPNG(imgBG,imgAI,(149,310))
                 
                 print(PlayerMove)
@@ -62,3 +64,4 @@ while True:
     if (key==ord('s')):
         StartGame=True
         initialTime=time.time()
+        StateResult=False
