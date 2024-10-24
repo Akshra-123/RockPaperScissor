@@ -26,12 +26,31 @@ while True:
             timer = time.time() - initialTime
             cv2.putText(imgBG, str(int(timer)), (605, 435), cv2.FONT_HERSHEY_PLAIN, 6, (255, 0, 255), 4)
         
-        if hands:
-            hand = hands[0]
-            fingers = detector.fingersUp(hand)
-            print(fingers)
+        if timer>3:
+            StateResult=True
+            timer=0
+            
+            if hands:
+                hand = hands[0]
+                fingers = detector.fingersUp(hand)
+                if fingers==[0,0,0,0,0]:
+                    PlayerMove=1
+                if fingers==[1,1,1,1,1]:
+                    PlayerMove=2
+                if fingers==[0,1,1,0,0]:
+                    PlayerMove=3
+                
+                imgAI = cv2.imread(f'RPS\\Resources\\Resources\\1.png',cv2.IMREAD_UNCHANGED)
+                imgBG = cvzone.overlayPNG(imgBG,imgAI,(149,310))
+                
+                print(PlayerMove)
+                print(fingers)
         
     imgBG[234:654,795:1195]=imgscaled
+    
+    if StateResult:
+        imgBG = cvzone.overlayPNG(imgBG,imgAI,(149,310))
+        
     
     
     #cv2.imshow("Image" , img)
